@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.etime.yqxdc.dao.SysLogMapper">
+  <resultMap id="BaseResultMap" type="edu.etime.yqxdc.pojo.SysLog">
+    <id column="lid" jdbcType="VARCHAR" property="lid" />
+    <result column="visittime" jdbcType="DATE" property="visittime" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="executiontime" jdbcType="INTEGER" property="executiontime" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lid, visittime, username, ip, url, executiontime, method
+  </sql>
+  <select id="selectSysLogs" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from syslog
+  </select>
+
+  <insert id="insertSelective" parameterType="edu.etime.yqxdc.pojo.SysLog">
+    insert into syslog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lid != null">
+        lid,
+      </if>
+      <if test="visittime != null">
+        visittime,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="executiontime != null">
+        executiontime,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lid != null">
+        #{lid,jdbcType=VARCHAR},
+      </if>
+      <if test="visittime != null">
+        #{visittime,jdbcType=DATE},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="executiontime != null">
+        #{executiontime,jdbcType=INTEGER},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

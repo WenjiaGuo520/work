@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.etime.yqxdc.dao.CusOrdersMapper" >
+  <resultMap id="BaseResultMap" type="edu.etime.yqxdc.pojo.CusOrders" >
+    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="CUSID" property="cusid" jdbcType="VARCHAR" />
+    <result column="ORDERTIME" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="ORDERSTATE" property="orderstate" jdbcType="INTEGER" />
+    <result column="ORDERTOTLEPRICE" property="ordertotleprice" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORDERID, CUSID, ORDERTIME, ORDERSTATE, ORDERTOTLEPRICE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cusorders
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cusorders
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.etime.yqxdc.pojo.CusOrders" >
+    insert into cusorders (ORDERID, CUSID, ORDERTIME, 
+      ORDERSTATE, ORDERTOTLEPRICE)
+    values (#{orderid,jdbcType=VARCHAR}, #{cusid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, 
+      #{orderstate,jdbcType=INTEGER}, #{ordertotleprice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.etime.yqxdc.pojo.CusOrders" >
+    insert into cusorders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="cusid != null" >
+        CUSID,
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME,
+      </if>
+      <if test="orderstate != null" >
+        ORDERSTATE,
+      </if>
+      <if test="ordertotleprice != null" >
+        ORDERTOTLEPRICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="cusid != null" >
+        #{cusid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderstate != null" >
+        #{orderstate,jdbcType=INTEGER},
+      </if>
+      <if test="ordertotleprice != null" >
+        #{ordertotleprice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.etime.yqxdc.pojo.CusOrders" >
+    update cusorders
+    <set >
+      <if test="cusid != null" >
+        CUSID = #{cusid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderstate != null" >
+        ORDERSTATE = #{orderstate,jdbcType=INTEGER},
+      </if>
+      <if test="ordertotleprice != null" >
+        ORDERTOTLEPRICE = #{ordertotleprice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.etime.yqxdc.pojo.CusOrders" >
+    update cusorders
+    set CUSID = #{cusid,jdbcType=VARCHAR},
+      ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
+      ORDERSTATE = #{orderstate,jdbcType=INTEGER},
+      ORDERTOTLEPRICE = #{ordertotleprice,jdbcType=DECIMAL}
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.etime.yqxdc.dao.RoleRightMapper" >
+  <resultMap id="BaseResultMap" type="edu.etime.yqxdc.pojo.RoleRight" >
+    <id column="RRID" property="rrid" jdbcType="VARCHAR" />
+    <result column="ROLEID" property="roleid" jdbcType="VARCHAR" />
+    <result column="FUNID" property="funid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RRID, ROLEID, FUNID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from roleright
+    where RRID = #{rrid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from roleright
+    where RRID = #{rrid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.etime.yqxdc.pojo.RoleRight" >
+    insert into roleright (RRID, ROLEID, FUNID
+      )
+    values (#{rrid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{funid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.etime.yqxdc.pojo.RoleRight" >
+    insert into roleright
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rrid != null" >
+        RRID,
+      </if>
+      <if test="roleid != null" >
+        ROLEID,
+      </if>
+      <if test="funid != null" >
+        FUNID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rrid != null" >
+        #{rrid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="funid != null" >
+        #{funid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.etime.yqxdc.pojo.RoleRight" >
+    update roleright
+    <set >
+      <if test="roleid != null" >
+        ROLEID = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="funid != null" >
+        FUNID = #{funid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RRID = #{rrid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.etime.yqxdc.pojo.RoleRight" >
+    update roleright
+    set ROLEID = #{roleid,jdbcType=VARCHAR},
+      FUNID = #{funid,jdbcType=VARCHAR}
+    where RRID = #{rrid,jdbcType=VARCHAR}
+  </update>
+</mapper>

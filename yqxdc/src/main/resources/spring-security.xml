@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!--配置spring-security-->
+    <security:http auto-config="true">
+
+
+        <!--配置认证模式-->
+        <security:form-login login-page="/sys/user/toLogin"
+                             login-processing-url="/login.do"
+                             authentication-success-forward-url="/sys/user/login"
+                             authentication-failure-url="/sys/user/toLogin?error=true"
+        />
+        <!--访问被拒绝配置-->
+        <security:access-denied-handler error-page="/error.jsp" />
+
+
+        <!--登出-->
+        <security:logout logout-url="/logout.do" logout-success-url="/WEB-INF/jsp/login.jsp"/>
+        <security:csrf disabled="true"/>
+
+        <!--配置需要和不需要拦截的请求-->
+        <security:intercept-url pattern="/login.do" access="permitAll()"/>
+        <security:intercept-url pattern="/sys/user/toLogin" access="permitAll()"/>
+        <security:intercept-url pattern="/css/**" access="permitAll()"/>
+        <security:intercept-url pattern="/img/**" access="permitAll()"/>
+        <security:intercept-url pattern="/plugins/**" access="permitAll()"/>
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+
+        <!--配置rememberMe-->
+        <security:remember-me
+                remember-me-parameter="remember-me"
+                remember-me-cookie="remember-me"
+                user-service-ref="userService"
+                token-repository-ref="jdbcTokenRepository"
+                token-validity-seconds="3600"/>
+    </security:http>
+
+
+    <!--<security:global-method-security pre-post-annotations="enabled"/>-->
+    <!--配置security角色-->
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userService">
+            <!--配置加密方式-->
+            <security:password-encoder ref="passwordEncoder"/>
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+    <!--配置密码加密方式-->
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!--配置token持久化类-->
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
