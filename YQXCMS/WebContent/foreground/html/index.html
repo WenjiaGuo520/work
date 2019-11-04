@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <title>首页</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    
+    
+    <style>
+        .carousel-inner img{
+            width: 100%;
+        }
+
+        .visitnews{
+            background-color: #d1cfd2;
+        }
+        .news-1{
+
+            height: 210px;
+            text-align: left;
+            /*line-height: 70px;*/
+        }
+        .news-2{
+            height: 210px;
+            text-align: left;
+        }
+        .news-3{
+            height: 210px;
+            text-align: left;
+        }
+        .head{
+            margin-bottom: 20px;
+        }
+        .beian{
+            height: 30px;
+            font-size: 12px;
+            text-align: center;
+            line-height: 30px;
+            background-color: #ffd090;
+            margin-top: 20px;
+        }
+        .banquan{
+            height: 30px;
+            font-size: 10px;
+            text-align: center;
+            line-height: 30px;
+            background-color: #ffd090;
+        }
+        .navbar-mine{
+            background-color: #2577E3;
+        }
+        ul li a{
+            color: white;
+        }
+        .navbar-header a{
+            color: white;
+        }
+
+    </style>
+    <script>
+	    
+        $(function () {
+        	$("#content").load("first.html");
+
+            //动态加载导航栏内容
+            $.post("/YQXCMS/art/type?cmd=nav",{},function(data){
+            	//最多只显示8条记录
+            	var length = 8;
+            	if(data.length<8){
+            		length=data.length;
+            	}
+            	
+            	for (var i = length; i >= 0; i--) {
+            		//填充内容,并带上相应的文章类型id
+					$("#firstli").after('<li><a href="javascript:void(0);" dataid="'+data[i].tid+'" onclick="contentload(this)">'+data[i].tname+'</a></li>');
+				}
+            	
+            },"json");    
+            
+            $(".news-1,.news-2,.news-3").mouseover(function () {
+                $(this).addClass("visitnews");
+            });
+            $(".news-1,.news-2,.news-3").mouseout(function () {
+                $(this).removeClass("visitnews");
+            });
+        })
+        
+        function contentload(obj) {
+        	$("#content").load("xiangqing.html");
+    		//alert($(obj).attr("dataid"));
+    		var tid = $(obj).attr("dataid");
+    		$.post("/YQXCMS/art/news?cmd=listByTid",{"tid":tid},function(data){
+    				//alert(data[0].artimg);
+    			//填充
+    			for(var i=0;i<data.length;i++){
+    				$("#art").append('       <div class="row">\n' +
+    		            '            <div class="media" id="img">\n' +
+    		            '                <div class="media-left media-middle">\n' +
+    		            '                    <a href="javascript:void(0);" dataid="'+data[i].aid+'" onclick="loadText(this)">\n' +
+    		            '                        <img class="media-object" src="/files/'+data[i].artimg+'" alt="...">\n' +
+    		            '                    </a>\n' +
+    		            '\n' +
+    		            '                </div>\n' +
+    		            '                <div class="media-body">\n' +
+    		            '                    <a href="javascript:void(0);" dataid="'+data[i].aid+'" onclick="loadText(this)"><h3>'+data[i].arttitle+'</h3></a>\n' +
+    		            '                    <p> '+data[i].artabs+'</p>\n' +
+    		            '                </div>\n' +
+    		            '\n' +
+    		            '            </div>');
+    			}
+    			
+    			},"json");
+		}
+		
+        function loadText(obj){
+        	var aid = $(obj).attr("dataid");
+        	$("#content").load("wenzhang.html");
+        	//填充文章类容
+        	$.post("/YQXCMS/art/news?cmd=getByAid",{"aid":aid},function(data){
+    			var date = new Date(data.pubDate);
+    			var y = date.getFullYear();
+    			var m = date.getMonth()+1;
+    			var d = date.getDate();
+    			var time = y+"-"+m+"-"+d;
+    			$("#pubDate").html("时间:&nbsp;&nbsp;"+time);
+    			$("#author").html("作者:&nbsp;&nbsp;"+data.author);
+    			$("#arttext").html(data.arttext);
+    			
+    		},"json");
+        }
+    </script>
+</head>
+<body>
+    <!--第一部分 -->
+    <header class="container-fluid head">
+        <!-- 导航 -->
+        <div class="row">
+            <nav class="navbar navbar-mine">
+                <div class="container-fluid">
+                    <div class="navbar-header btn-lg">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">首页</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">易腾</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse btn-lg" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li id="firstli"><a href="javascript:viod(0);">首页 <span class="sr-only">(current)</span></a></li>
+                           
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+     <div id="content"></div>
+
+    <footer class="container-fluid">
+        <div class="row beian">
+
+                <p> 这里是一堆备案号,以及简单的联系方式<p>
+
+        </div>
+        <div class="row banquan">
+               <p> 这里有版权信息</p>
+        </div>
+    </footer>
+</body>
+</html>

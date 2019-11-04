@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>系统功能管理</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <base target="_blank">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #F5F5F5;
+        }
+        #head{
+            color: #28A0DC;
+            text-align: left;
+            font-size: 25px;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #AAAAAA;
+            margin-top: 18px;
+            padding-left: 18px;
+        }
+        #left{
+            float: left;
+            width: 20%;
+            margin-top: 30px;
+        }
+        #left dt{
+            display: block;
+            font-size: 25px;
+            font-weight: bolder;
+            color: #605A4D;
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        #left dd{
+            display: block;
+            font-size: 20px;
+
+            margin-left: 40px;
+            margin-bottom: 15px;
+
+        }
+        a{
+            text-decoration: none;
+        }
+        a:link{
+            color:#605A4D;
+        }
+
+        #right{
+            float: left;
+            width: 80%;
+            margin-top: 10px;
+            padding-top: 20px;
+            padding-left: 10%;
+            padding-right: 40%;
+        }
+        .btn{
+            background-color: #68748E;
+        }
+        .addChild{
+            background-color:#EAEAEA;
+        }
+        .btn-addroot{
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+
+    <div id="head">
+        <h3><a href="#">系统功能管理</a></h3>
+    </div>
+
+    <div id="left">
+        <dl>
+            <dt><a href="#">商品管理</a></dt>
+                <dd><a href="#">商品类型管理</a></dd>
+                <dd><a href="#">订单管理</a></dd>
+                <dd><a href="#">商品管理</a></dd>
+                <dd><a href="#">XXX管理</a></dd>
+            <dt><a href="#">系统管理</a></dt>
+                <dd><a href="角色列表.html">系统角色管理</a></dd>
+                <dd><a href="#">系统功能管理</a></dd>
+                <dd><a href="用户列表.html">用户管理</a></dd>
+        </dl>
+        <button type="button" class="btn btn-default btn-addroot">增加根节点</button>
+    </div>
+    <div id="right">
+        <form>
+            <div class="form-group">
+                <label for="parentFun">父功能</label>
+                <input type="text" class="form-control" id="parentFun" placeholder="系统管理" disabled>
+            </div>
+            <div class="form-group">
+                <label for="childFun">功能名称</label>
+                <input type="text" class="form-control" id="childFun" placeholder="用户管理">
+            </div>
+            <div class="form-group">
+                <label for="addrFun">功能地址</label>
+                <input type="text" class="form-control" id="addrFun">
+            </div>
+            <div class="form-group">
+                <label for="funState">功能状态</label>
+                <input type="text" class="form-control" id="funState" placeholder="功能状态">
+            </div>
+            <button type="button" class="btn btn-default addChild">增加子节点</button>
+            <button type="submit" class="btn btn-default">保存</button>
+        </form>
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+.carousel-inner img{
+    width: 100%;
+}
+#dashiji {
+    height: 500px;
+    text-align: left;
+    /*line-height: 500px;*/
+    background-color: #999999;
+}
+
+.head {
+    margin-bottom: 5px;
+}
+
+.beian {
+    height: 30px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #ffd090;
+    margin-top: 20px;
+}
+
+.banquan {
+    height: 30px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #ffd090;
+}
+
+.navbar-mine{
+    background-color: #2577E3 !important;
+}
+.navbar li a{
+    color: white;
+}
+.navbar-header a{
+    color: white;
+}
+.edit-head{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.edit-time{
+    text-align: right;
+
+}
+.edit-author{
+    text-align: left;
+}
+.edit-body{
+    height: 600px;
+    background-color: #999999;
+}
+.visitnews{
+    background-color: #d1cfd2;
+}

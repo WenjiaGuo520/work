@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色权限分配</title>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #F5F5F5;
+        }
+        a{
+            text-decoration: none;
+            color: #2087CC;
+        }
+        #head{
+            margin: 10px 0px 10px 0px;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #CDC1AF;
+            padding-left: 15px;
+        }
+
+        #permission{
+            margin-top: 30px;
+        }
+        #permission dt{
+            margin-left: 30px;
+            margin-bottom: 15px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        #permission dd{
+            margin-left: 60px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        #save-btn{
+            width: 80px;
+            height: 40px;
+            font-size: 20px;
+
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            background-color: #647089;
+            border: 1px solid #000;
+            margin-left: 60px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        $(function () {
+
+            $("#gtypes").click(function () {
+                // alert(this);
+                $(".gtype").prop("checked",$(this).prop("checked"));
+            });
+
+            $("#manages").click(function () {
+                $(".manage").prop("checked",$(this).prop("checked"));
+            });
+        })
+    </script>
+
+</head>
+<body>
+<div id="head">
+    <a href="javascript:void(0);">用户管理</a> &nbsp;&nbsp;/&nbsp;&nbsp;
+    <a href="javascript:void(0);" style="color: #AAA">权限分配</a>
+</div>
+<div id="permission">
+    <form action="#">
+
+
+    <dl>
+        <dt><input type="checkbox" id="gtypes" />&nbsp;&nbsp;商品管理</dt>
+            <dd><input type="checkbox" class="gtype" name="gtype" />&nbsp;&nbsp;商品类型管理</dd>
+            <dd><input type="checkbox" class="gtype" name="gtype" />&nbsp;&nbsp;订单管理</dd>
+            <dd><input type="checkbox" class="gtype" name="gtype" />&nbsp;&nbsp;商品管理</dd>
+            <dd><input type="checkbox" class="gtype" name="gtype" />&nbsp;&nbsp;XXX管理</dd>
+        <dt><input type="checkbox" id="manages" />&nbsp;&nbsp;系统管理</dt>
+            <dd><input type="checkbox" class="manage" name="manage" />&nbsp;&nbsp;系统角色管理</dd>
+            <dd><input type="checkbox" class="manage" name="manage" />&nbsp;&nbsp;系统功能管理</dd>
+            <dd><input type="checkbox" class="manage" name="manage" />&nbsp;&nbsp;用户管理</dd>
+    </dl>
+    <input type="submit" id="save-btn" value="保存"/>
+    </form>
+</div>
+</body>
+</html>
