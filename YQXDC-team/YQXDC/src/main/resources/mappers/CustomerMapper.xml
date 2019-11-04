@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.etime.yqxdc.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="edu.etime.yqxdc.pojo.Customer" >
+    <id column="CUSID" property="cusid" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+    <result column="NICKNAME" property="nickname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CUSID, OPENID, NICKNAME
+  </sql>
+  <select id="selectByPrimarkey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where CUSID = #{cusid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据客户的openid获取客户的信息 -->
+  <select id="selectCustomerByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from customer
+    where CUSID = #{cusid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.etime.yqxdc.pojo.Customer" >
+    insert into customer (CUSID, OPENID, NICKNAME
+      )
+    values (#{cusid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.etime.yqxdc.pojo.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cusid != null" >
+        CUSID,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="nickname != null" >
+        NICKNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cusid != null" >
+        #{cusid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.etime.yqxdc.pojo.Customer" >
+    update customer
+    <set >
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CUSID = #{cusid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.etime.yqxdc.pojo.Customer" >
+    update customer
+    set OPENID = #{openid,jdbcType=VARCHAR},
+      NICKNAME = #{nickname,jdbcType=VARCHAR}
+    where CUSID = #{cusid,jdbcType=VARCHAR}
+  </update>
+</mapper>

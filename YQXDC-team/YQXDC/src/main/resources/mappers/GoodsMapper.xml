@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.etime.yqxdc.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="edu.etime.yqxdc.pojo.Goods" >
+    <id column="GID" property="gid" jdbcType="VARCHAR" />
+    <result column="GTID" property="gtid" jdbcType="VARCHAR" />
+    <result column="GNAME" property="gname" jdbcType="VARCHAR" />
+    <result column="GPRICE" property="gprice" jdbcType="DECIMAL" />
+    <result column="GSTATE" property="gstate" jdbcType="INTEGER" />
+    <result column="GIMG" property="gimg" jdbcType="VARCHAR" />
+    <result column="GTIME" property="gtime" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="edu.etime.yqxdc.pojo.Goods" extends="BaseResultMap" >
+    <result column="GCONTENT" property="gcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GID, GTID, GNAME, GPRICE, GSTATE, GIMG, GTIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    GCONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods
+    where GID = #{gid,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询商品列表 -->
+  <select id="selectGoods" resultType="edu.etime.yqxdc.dto.GoodsDto" parameterType="edu.etime.yqxdc.pojo.Goods">
+  	select GID, a.GTID, GNAME, GPRICE, GSTATE, GIMG, GTIME,GCONTENT,b.gtname
+  	from goods a inner join goodstype b on a.GTID=b.GTID
+  	where 0=0
+  	<if test="gtid!=null and gtid!=''">
+  		and a.gtid=#{gtid}
+  	</if>
+  	<if test="gstate!=null">
+  		and gstate=#{gstate}
+  	</if>
+  	<if test="gname!=null and gname!=''">
+  		and gname like '%${gname}%'
+  	</if>
+  </select>
+  
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goods
+    where GID = #{gid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.etime.yqxdc.pojo.Goods" >
+    insert into goods (GID, GTID, GNAME, 
+      GPRICE, GSTATE, GIMG, 
+      GTIME, GCONTENT)
+    values (#{gid,jdbcType=VARCHAR}, #{gtid,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, 
+      #{gprice,jdbcType=DECIMAL}, #{gstate,jdbcType=INTEGER}, #{gimg,jdbcType=VARCHAR}, 
+      #{gtime,jdbcType=INTEGER}, #{gcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.etime.yqxdc.pojo.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        GID,
+      </if>
+      <if test="gtid != null" >
+        GTID,
+      </if>
+      <if test="gname != null" >
+        GNAME,
+      </if>
+      <if test="gprice != null" >
+        GPRICE,
+      </if>
+      <if test="gstate != null" >
+        GSTATE,
+      </if>
+      <if test="gimg != null" >
+        GIMG,
+      </if>
+      <if test="gtime != null" >
+        GTIME,
+      </if>
+      <if test="gcontent != null" >
+        GCONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="gtid != null" >
+        #{gtid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gstate != null" >
+        #{gstate,jdbcType=INTEGER},
+      </if>
+      <if test="gimg != null" >
+        #{gimg,jdbcType=VARCHAR},
+      </if>
+      <if test="gtime != null" >
+        #{gtime,jdbcType=INTEGER},
+      </if>
+      <if test="gcontent != null" >
+        #{gcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.etime.yqxdc.pojo.Goods" >
+    update goods
+    <set >
+      <if test="gtid != null" >
+        GTID = #{gtid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        GNAME = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        GPRICE = #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gstate != null" >
+        GSTATE = #{gstate,jdbcType=INTEGER},
+      </if>
+      <if test="gimg != null" >
+        GIMG = #{gimg,jdbcType=VARCHAR},
+      </if>
+      <if test="gtime != null" >
+        GTIME = #{gtime,jdbcType=INTEGER},
+      </if>
+      <if test="gcontent != null" >
+        GCONTENT = #{gcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where GID = #{gid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="edu.etime.yqxdc.pojo.Goods" >
+    update goods
+    set GTID = #{gtid,jdbcType=VARCHAR},
+      GNAME = #{gname,jdbcType=VARCHAR},
+      GPRICE = #{gprice,jdbcType=DECIMAL},
+      GSTATE = #{gstate,jdbcType=INTEGER},
+      GIMG = #{gimg,jdbcType=VARCHAR},
+      GTIME = #{gtime,jdbcType=INTEGER},
+      GCONTENT = #{gcontent,jdbcType=LONGVARCHAR}
+    where GID = #{gid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.etime.yqxdc.pojo.Goods" >
+    update goods
+    set GTID = #{gtid,jdbcType=VARCHAR},
+      GNAME = #{gname,jdbcType=VARCHAR},
+      GPRICE = #{gprice,jdbcType=DECIMAL},
+      GSTATE = #{gstate,jdbcType=INTEGER},
+      GIMG = #{gimg,jdbcType=VARCHAR},
+      GTIME = #{gtime,jdbcType=INTEGER}
+    where GID = #{gid,jdbcType=VARCHAR}
+  </update>
+</mapper>
